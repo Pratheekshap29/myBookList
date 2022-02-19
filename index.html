@@ -10,21 +10,24 @@
 <body>
     <h1 class="text-center mt-5">My Book List</h1>
     <div class="container mt-5">
-        <div class="form-group">
-            <label for="title">Title :</label>
-            <input type="text" class="form-control" placeholder="Enter the book title">
-        </div>
-        <div class="form-group mt-3">
-            <label for="Author">Author :</label>
-            <input type="text" class="form-control" placeholder="Enter the Author's name">
-        </div>
-        <div class="form-group mt-3">
-            <label for="isbn">ISBN :</label>
-            <input type="text" class="form-control" placeholder="Enter the book ISBN">
-        </div>
-        <div class="d-grid">
-            <input type="submit" class="mt-4 btn btn-outline-info btn-block">
-        </div>
+        <form id="my-form">
+            <div class="form-group">
+                <label for="title">Title :</label>
+                <input type="text" id="title" class="form-control" placeholder="Enter the book title">
+            </div>
+            <div class="form-group mt-3">
+                <label for="Author">Author :</label>
+                <input type="text" id="author" class="form-control" placeholder="Enter the Author's name">
+            </div>
+            <div class="form-group mt-3">
+                <label for="isbn">ISBN :</label>
+                <input type="text" id="isbn" class="form-control" placeholder="Enter the book ISBN">
+            </div>
+            <div class="d-grid">
+                <input type="submit" class="mt-4 btn btn-outline-info btn-block">
+            </div>
+        </form>
+        
     </div>
     <div class="container mt-5">
         <table class="table table-striped">
@@ -36,7 +39,7 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody class="t-body">
+            <tbody id="t-body">
                 
             </tbody>
         </table>
