@@ -6,24 +6,47 @@ class Book{
         this.isbn=isbn;
     }
 }
+class LS{
+    static getDetails(){
+        let books=[];
+
+       
+        if(localStorage.getItem('books')==='')
+        {
+            books=[];
+        } 
+        else{
+             books=JSON.parse(localStorage.getItem("books"));     
+        }
+        return books; 
+    }
+    static addDetail(book)
+    {
+        const books=LS.getDetails();
+        books.push(book);
+        localStorage.setItem('books',JSON.stringify(books));
+    }
+    static deleteDetail(isbn)
+    {
+        const books=LS.getDetails();
+        books.forEach((book,index)=>{
+            if(book.isbn===isbn)
+            {
+                books.splice(index,1);
+            }
+        });
+        localStorage.setItem('books',JSON.stringify(books));
+    }
+}
 
 class UI{
     
     static displayBooks()
     {
        
-        const books=[
-            {
-                title:'book1',
-                author:'John Doe',
-                isbn : '12345'
-            },
-            {
-                title:'book2',
-                author:'Jane Doe',
-                isbn : '15378'
-            }
-        ];
+        const books=LS.getDetails();
+        console.log(books)
+        
 
         books.forEach((book)=>UI.addBooks(book));
     }
@@ -38,7 +61,6 @@ class UI{
         <td>${book.isbn}</td>
         <td><a href=# class="badge rounded-pill bg-danger delete">X</a></td>
         `;
-        console.log(tr);
         document.querySelector('#t-body').appendChild(tr);
         
     }
@@ -46,8 +68,7 @@ class UI{
     {
         if(confirm('Are you sure you want to delete?'))
         {
-            el.remove();
-            UI.addMessage('The book details got deleted!','danger');
+            el.remove();   
         }   
     }
     static removeAll()
@@ -71,6 +92,7 @@ class UI{
     }
 }
 
+
 //display
 document.addEventListener('DOMContentLoaded',UI.displayBooks);
 
@@ -88,6 +110,7 @@ document.querySelector('#my-form').addEventListener('submit',(e)=>{
     {
         const book=new Book(title,author,isbn);
         UI.addBooks(book);
+        LS.addDetail(book);
         UI.addMessage('The book was successfully added!','info');
         UI.removeAll();
     }
@@ -97,6 +120,8 @@ document.getElementById('t-body').addEventListener('click',(e)=>{
     if(e.target.classList.contains('delete'))
     {
         UI.deleteBook(e.target.parentElement.parentElement);
+        LS.deleteDetail(e.target.parentElement.previousElementSibling.textContent);
+        UI.addMessage('The book details got deleted!','danger');
     }
 
 })
